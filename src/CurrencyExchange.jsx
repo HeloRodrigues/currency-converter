@@ -8,7 +8,18 @@ import { useEffect, useState } from "react";
 import ResultField from "./ResultField";
 
 const CurrencyExchange = () => {
-  const currencies = ["DKK", "EUR", "BRL", "USD", "GBP"];
+  const currencies = [
+    "DKK",
+    "EUR",
+    "BRL",
+    "USD",
+    "GBP",
+    "CAD",
+    "SEK",
+    "YER",
+    "IRR",
+    "ALL",
+  ];
 
   const [amount, setAmount] = useState();
   const [fromCurrency, setFromCurrency] = useState();
