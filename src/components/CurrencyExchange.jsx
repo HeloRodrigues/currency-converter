@@ -1,12 +1,26 @@
 import styled from "styled-components";
 import * as React from "react";
 import AmountField from "./AmountField";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useEffect, useState } from "react";
 import ResultField from "./ResultField";
-import ChooseCurrency from "./ChooseCurrency";
 
 const CurrencyExchange = () => {
+  const currencies = [
+    "DKK",
+    "EUR",
+    "BRL",
+    "USD",
+    "GBP",
+    "CAD",
+    "SEK",
+    "YER",
+    "IRR",
+    "ALL",
+  ];
+
   const [amount, setAmount] = useState();
   const [fromCurrency, setFromCurrency] = useState();
   const [toCurrency, setToCurrency] = useState();
@@ -18,7 +32,7 @@ const CurrencyExchange = () => {
   const convert = () => {
     setIsLoading(true);
     var myHeaders = new Headers();
-    myHeaders.append("apikey", "CRFfu76OrLYkwt7VLGL62jPEwNqDASW1");
+    myHeaders.append("apikey", "LNoGuqoWkzQIzpY1DP2bK2JVhOwoxHyH");
 
     var requestOptions = {
       method: "GET",
@@ -34,6 +48,7 @@ const CurrencyExchange = () => {
         .then((response) => {
           response.text().then((result) => {
             const parsedResult = JSON.parse(result);
+            console.log(response);
             if (response.status === 400) {
               setErrorMessage(parsedResult.error["message"]);
             } else {
@@ -59,17 +74,34 @@ const CurrencyExchange = () => {
       setFormReady(false);
     }
   }, [amount, fromCurrency, toCurrency]);
+  // console.log(isFormReady);
 
   return (
     <FormSection>
       <ExchangeSection>
         <AmountField onChange={(value) => setAmount(value)} />
-        <ChooseCurrency
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={currencies}
+          sx={{ width: 300 }}
           onChange={(event, newValue) => setFromCurrency(newValue)}
+          renderInput={(params) => (
+            <TextField {...params} label="Choose Currency" />
+          )}
         />
-        <ChooseCurrency
+
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={currencies}
+          sx={{ width: 300 }}
           onChange={(event, newValue) => setToCurrency(newValue)}
+          renderInput={(params) => (
+            <TextField {...params} label="Choose Currency" />
+          )}
         />
+
         <LoadingButton
           loading={isLoading}
           variant="outlined"
@@ -85,16 +117,25 @@ const CurrencyExchange = () => {
   );
 };
 
-const FormSection = styled.form`
+const FormSection = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+
+  @media screen and (max-width: 980px) {
+    display: block;
+  }
+
+  @media screen and (max-width: 450px) {
+    display: block;
+  }
 `;
 
 const ExchangeSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-block-end: 2rem;
 `;
 
 export default CurrencyExchange;

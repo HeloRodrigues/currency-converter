@@ -17,15 +17,27 @@ const Page = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding-inline: 4rem;
   margin-block: 10rem;
   margin-inline: 20rem;
   padding-block: 3rem;
-  padding-inline: 3rem;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: #adcaff;
   box-shadow: 3px 4px 6px 3px #013365;
   border-radius: 2rem;
+
+  @media screen and (max-width: 980px) {
+    margin-inline: 10rem;
+    margin-block: 15rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    margin-inline: 1.5rem;
+    margin-block: 6rem;
+    width: 53%;
+  }
 `;
 
 export default App;
