@@ -8,7 +8,6 @@ import ChooseCurrency from "./ChooseCurrency";
 
 const CurrencyExchange = () => {
   const [amount, setAmount] = useState();
-  //   const [currencies, setCurrencies] = useState();
   const [fromCurrency, setFromCurrency] = useState();
   const [toCurrency, setToCurrency] = useState();
   const [convertedValue, setConvertedValue] = useState();
@@ -86,7 +85,7 @@ const CurrencyExchange = () => {
   );
 };
 
-const FormSection = styled.div`
+const FormSection = styled.form`
   display: flex;
   align-items: center;
   gap: 2rem;
