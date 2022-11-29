@@ -17,6 +17,7 @@ const AmountField = ({ onChange }) => {
         autoComplete="off"
       >
         <TextField
+          type="number"
           id="outlined-basic"
           label="Choose Amount"
           variant="outlined"

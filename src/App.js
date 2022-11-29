@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Header";
+import Header from "./components/Header";
 import styled from "styled-components";
-import CurrencyExchange from "./CurrencyExchange";
+import CurrencyExchange from "./components/CurrencyExchange";
 
 const App = () => {
   return (

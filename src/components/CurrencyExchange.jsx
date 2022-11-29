@@ -1,27 +1,14 @@
 import styled from "styled-components";
 import * as React from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import AmountField from "./AmountField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useEffect, useState } from "react";
 import ResultField from "./ResultField";
+import ChooseCurrency from "./ChooseCurrency";
 
 const CurrencyExchange = () => {
-  const currencies = [
-    "DKK",
-    "EUR",
-    "BRL",
-    "USD",
-    "GBP",
-    "CAD",
-    "SEK",
-    "YER",
-    "IRR",
-    "ALL",
-  ];
-
   const [amount, setAmount] = useState();
+  //   const [currencies, setCurrencies] = useState();
   const [fromCurrency, setFromCurrency] = useState();
   const [toCurrency, setToCurrency] = useState();
   const [convertedValue, setConvertedValue] = useState();
@@ -78,26 +65,10 @@ const CurrencyExchange = () => {
     <FormSection>
       <ExchangeSection>
         <AmountField onChange={(value) => setAmount(value)} />
-
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={currencies}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Choose Currency" />
-          )}
+        <ChooseCurrency
           onChange={(event, newValue) => setFromCurrency(newValue)}
         />
-
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={currencies}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Choose Currency" />
-          )}
+        <ChooseCurrency
           onChange={(event, newValue) => setToCurrency(newValue)}
         />
         <LoadingButton
