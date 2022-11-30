@@ -109,7 +109,9 @@ const CurrencyExchange = () => {
     return <LinearProgress sx={{ width: "100%" }} />;
   }
   if (pageErrorMessage) {
-    return <ResultField value={pageErrorMessage} />;
+    return (
+      <ResultField value={pageErrorMessage} style={{ color: "#fa3e05" }} />
+    );
   }
 
   return (
@@ -148,7 +150,9 @@ const CurrencyExchange = () => {
         </LoadingButton>
       </ExchangeSection>
       {convertedValue && <ResultField value={convertedValue} />}
-      {errorMessage && <ResultField value={errorMessage} />}
+      {errorMessage && (
+        <ResultField value={errorMessage} style={{ color: "#fa3e05" }} />
+      )}
     </FormSection>
   );
 };

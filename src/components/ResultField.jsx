@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-const ResultField = ({ value }) => {
-  return <Result type="number">{value}</Result>;
+const ResultField = ({ value, style }) => {
+  return (
+    <Result type="number" style={style}>
+      {value}
+    </Result>
+  );
 };
 
 const Result = styled.div`
