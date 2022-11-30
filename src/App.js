@@ -30,7 +30,7 @@ const Page = styled.div`
 
   @media screen and (max-width: 980px) {
     margin-inline: 10rem;
-    margin-block: 15rem;
+    margin-block: 10rem;
   }
 
   @media screen and (max-width: 450px) {
