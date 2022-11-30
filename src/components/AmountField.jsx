@@ -18,10 +18,17 @@ const AmountField = ({ onChange }) => {
       >
         <TextField
           type="number"
+          InputProps={{
+            inputProps: { min: 0 },
+          }}
           id="outlined-basic"
           label="Choose Amount"
           variant="outlined"
-          onChange={(event) => onChange(event.target.value)}
+          onChange={(event) =>
+            event.target.value > 0
+              ? onChange(event.target.value)
+              : (event.target.value = undefined)
+          }
         />
       </Box>
     </div>
