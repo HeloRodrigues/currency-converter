@@ -1,4 +1,3 @@
-// import styled from "styled-components";
 import styled from "styled-components";
 import { ReactComponent as Currency } from "./currency.svg";
 
