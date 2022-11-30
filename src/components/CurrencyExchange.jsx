@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import * as React from "react";
+import LinearProgress from "@mui/material/LinearProgress";
 import AmountField from "./AmountField";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -8,19 +9,6 @@ import { useEffect, useState } from "react";
 import ResultField from "./ResultField";
 
 const CurrencyExchange = () => {
-  const currencies = [
-    "DKK",
-    "EUR",
-    "BRL",
-    "USD",
-    "GBP",
-    "CAD",
-    "SEK",
-    "YER",
-    "IRR",
-    "ALL",
-  ];
-
   const [amount, setAmount] = useState();
   const [fromCurrency, setFromCurrency] = useState();
   const [toCurrency, setToCurrency] = useState();
@@ -28,10 +16,55 @@ const CurrencyExchange = () => {
   const [isFormReady, setFormReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  const [currencies, setCurrencies] = useState([]);
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [pageErrorMessage, setPageErrorMessage] = useState();
+
+  const getCurrencySymbols = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("apikey", "V51rR7pVPrG99lhDVa7HgBDixESKVV7U");
+
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
+    };
+    try {
+      fetch(
+        "https://api.apilayer.com/exchangerates_data/symbols",
+        requestOptions
+      )
+        .then((response) => {
+          response.text().then((result) => {
+            const parsedResult = JSON.parse(result);
+            if (response.status === 400) {
+              setPageErrorMessage(parsedResult.error["message"]);
+            } else if (response.status === 429) {
+              setPageErrorMessage(parsedResult.message);
+            } else {
+              setCurrencies(Object.keys(parsedResult.symbols));
+            }
+            setIsPageLoading(false);
+          });
+        })
+        .catch(() => {
+          setPageErrorMessage("Something went wrong. Try again.");
+          setIsPageLoading(false);
+        });
+    } catch (e) {
+      setPageErrorMessage("Something went wrong. Try again.");
+      setIsPageLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCurrencySymbols();
+  }, []);
 
   const convert = () => {
+    setIsLoading(true);
     var myHeaders = new Headers();
-    myHeaders.append("apikey", "LNoGuqoWkzQIzpY1DP2bK2JVhOwoxHyH");
+    myHeaders.append("apikey", "V51rR7pVPrG99lhDVa7HgBDixESKVV7U");
 
     var requestOptions = {
       method: "GET",
@@ -71,7 +104,13 @@ const CurrencyExchange = () => {
       setFormReady(false);
     }
   }, [amount, fromCurrency, toCurrency]);
-  // console.log(isFormReady);
+
+  if (isPageLoading) {
+    return <LinearProgress sx={{ width: "100%" }} />;
+  }
+  if (pageErrorMessage) {
+    return <ResultField value={pageErrorMessage} />;
+  }
 
   return (
     <FormSection>
@@ -125,6 +164,7 @@ const FormSection = styled.div`
 
   @media screen and (max-width: 450px) {
     display: block;
+    max-width: 90%;
   }
 `;
 
@@ -133,6 +173,14 @@ const ExchangeSection = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-block-end: 2rem;
+
+  @media screen and (max-width: 980px) {
+    margin-inline: 55px;
+  }
+
+  @media screen and (max-width: 450px) {
+    margin-inline: -60px;
+  }
 `;
 
 export default CurrencyExchange;
