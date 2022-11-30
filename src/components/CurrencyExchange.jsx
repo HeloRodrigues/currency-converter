@@ -30,7 +30,6 @@ const CurrencyExchange = () => {
   const [errorMessage, setErrorMessage] = useState();
 
   const convert = () => {
-    setIsLoading(true);
     var myHeaders = new Headers();
     myHeaders.append("apikey", "LNoGuqoWkzQIzpY1DP2bK2JVhOwoxHyH");
 
@@ -39,20 +38,18 @@ const CurrencyExchange = () => {
       redirect: "follow",
       headers: myHeaders,
     };
-
     try {
       fetch(
-        ` https://api.apilayer.com/exchangerates_data/latest?symbols=${toCurrency}&base=${fromCurrency}`,
+        `https://api.apilayer.com/exchangerates_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amount}`,
         requestOptions
       )
         .then((response) => {
           response.text().then((result) => {
             const parsedResult = JSON.parse(result);
-            console.log(response);
             if (response.status === 400) {
               setErrorMessage(parsedResult.error["message"]);
             } else {
-              setConvertedValue(parsedResult.rates[toCurrency]);
+              setConvertedValue(parsedResult.result);
             }
             setIsLoading(false);
           });
